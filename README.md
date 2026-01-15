@@ -7,19 +7,6 @@ FastAPI service for receiving WhatsApp-like messages with HMAC-SHA256 signature 
 
 ---
 
-## Table of Contents
-
-1. [Features](#features)
-2. [Project Structure](#project-structure)
-3. [Setup & Installation](#setup--installation)
-4. [Running the Service](#running-the-service)
-5. [Testing](#testing)
-6. [API Documentation](#api-documentation)
-7. [Design Decisions](#design-decisions)
-8. [Troubleshooting](#troubleshooting)
-
----
-
 ## Features
 
 - HMAC-SHA256 signature verification
@@ -406,7 +393,7 @@ request_latency_ms_count 25
 
 ---
 
-## 🏗️ Design Decisions
+##  Design Decisions
 
 ### 1. HMAC-SHA256 Signature Verification
 
@@ -600,6 +587,7 @@ docker compose up -d
 ## Submission
 
 Submitted for Lyftr AI Backend Assignment
+
 
 
 
