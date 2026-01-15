@@ -71,16 +71,6 @@ lyftr-webhook-api/
 - Docker Desktop ([Download](https://www.docker.com/products/docker-desktop))
 - Git ([Download](https://git-scm.com/download/win))
 
-#### macOS
-```bash
-brew install python@3.11 docker
-```
-
-#### Linux (Ubuntu/Debian)
-```bash
-sudo apt-get update
-sudo apt-get install python3.11 python3-pip docker.io docker-compose
-```
 
 ### Clone & Install
 
@@ -110,8 +100,8 @@ export LOG_LEVEL="INFO"
 docker compose up -d --build
 
 # Check logs
-docker compose logs api --no-log-prefix | head -n 20
-docker compose logs api --no-log-prefix | head -n 20 | jq .
+docker compose logs --no-log-prefix -f api
+
 
 # Stop service
 docker compose down -v
@@ -124,7 +114,7 @@ $env:DATABASE_URL = "sqlite:////data/app.db"
 $env:LOG_LEVEL = "INFO"
 
 docker compose up -d --build
-docker compose logs -f api
+docker compose logs --no-log-prefix -f api
 docker compose down -v
 ```
 
@@ -171,18 +161,6 @@ python -m pytest tests/ -v
 
 # Or using Makefile
 make test
-```
-
-**Expected Output:**
-```
-tests/test_webhook.py::test_webhook_valid_message PASSED
-tests/test_webhook.py::test_webhook_duplicate_message PASSED
-tests/test_webhook.py::test_webhook_invalid_signature PASSED
-tests/test_messages.py::test_messages_basic_list PASSED
-tests/test_messages.py::test_messages_pagination PASSED
-tests/test_stats.py::test_stats_basic PASSED
-...
-===================== 20 passed in 1.77s =====================
 ```
 
 ### Manual Testing
@@ -234,11 +212,6 @@ curl -X POST http://localhost:8000/webhook \
 $WEBHOOK_SECRET = "testsecret"
 $BODY = '{"message_id":"m1","from":"+919876543210","to":"+14155550100","ts":"2025-01-15T10:00:00Z","text":"Hello"}'
 
-# Compute signature
-$bytes = [System.Text.Encoding]::UTF8.GetBytes($BODY)
-$hmac = New-Object System.Security.Cryptography.HMACSHA256
-$hmac.Key = [System.Text.Encoding]::UTF8.GetBytes($WEBHOOK_SECRET)
-$sig = ([System.BitConverter]::ToString($hmac.ComputeHash($bytes)) -replace '-', '').ToLower()
 
 # Send request
 $response = Invoke-WebRequest -Uri "http://localhost:8000/webhook" `
@@ -603,43 +576,6 @@ docker run -d \
 docker compose up -d
 ```
 
-### Kubernetes
-
-```bash
-kubectl apply -f k8s/deployment.yaml
-kubectl apply -f k8s/service.yaml
-```
-
----
-
-## Monitoring & Observability
-
-### Prometheus Scrape Config
-
-```yaml
-scrape_configs:
-  - job_name: 'webhook-api'
-    static_configs:
-      - targets: ['localhost:8000']
-    metrics_path: '/metrics'
-    scrape_interval: 15s
-```
-
-### Example Queries
-
-```promql
-# Request rate per endpoint
-rate(http_requests_total[5m]) by (path)
-
-# Error rate
-rate(http_requests_total{status=~"4..|5.."}[5m])
-
-# P95 latency
-histogram_quantile(0.95, request_latency_ms)
-
-# Webhook success rate
-webhook_requests_total{result="created"} / webhook_requests_total
-```
 
 ---
 
@@ -664,5 +600,6 @@ webhook_requests_total{result="created"} / webhook_requests_total
 ## Submission
 
 Submitted for Lyftr AI Backend Assignment
+
 
 
