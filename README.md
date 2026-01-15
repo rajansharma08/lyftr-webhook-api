@@ -87,7 +87,7 @@ sudo apt-get install python3.11 python3-pip docker.io docker-compose
 
 ```bash
 # Clone repository
-git clone https://github.com/YOUR_USERNAME/lyftr-webhook-api.git
+git clone https://github.com/rajansharma08/lyftr-webhook-api.git
 cd lyftr-webhook-api
 
 # Install dependencies
@@ -111,7 +111,8 @@ export LOG_LEVEL="INFO"
 docker compose up -d --build
 
 # Check logs
-docker compose logs -f api
+docker compose logs api --no-log-prefix | head -n 20
+docker compose logs api --no-log-prefix | head -n 20 | jq .
 
 # Stop service
 docker compose down -v
@@ -664,3 +665,4 @@ webhook_requests_total{result="created"} / webhook_requests_total
 ## Submission
 
 Submitted for Lyftr AI Backend Assignment
+
