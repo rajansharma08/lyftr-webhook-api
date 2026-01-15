@@ -1,4 +1,4 @@
-version: '3.8'
+
 
 services:
   api:
@@ -18,4 +18,5 @@ services:
 
 volumes:
   app_data:
+
     driver: local
