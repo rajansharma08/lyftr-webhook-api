@@ -654,6 +654,13 @@ webhook_requests_total{result="created"} / webhook_requests_total
 
 ---
 
+## Setup Used
+
+- **Editor**: VSCode
+- **AI Assistance**: GitHub Copilot + Claude Haiku
+
+---
+
 ## Submission
 
 Submitted for Lyftr AI Backend Assignment
