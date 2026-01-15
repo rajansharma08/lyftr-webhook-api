@@ -40,7 +40,6 @@ FastAPI service for receiving WhatsApp-like messages with HMAC-SHA256 signature 
 ```
 lyftr-webhook-api/
 ├── app/
-│   ├── __init__.py
 │   ├── main.py              # FastAPI app, routes, middleware
 │   ├── models.py            # Pydantic schemas and validators
 │   ├── storage.py           # SQLite database operations
@@ -665,4 +664,5 @@ webhook_requests_total{result="created"} / webhook_requests_total
 ## Submission
 
 Submitted for Lyftr AI Backend Assignment
+
 
